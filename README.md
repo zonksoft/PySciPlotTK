@@ -12,8 +12,10 @@ The features are:
 - **Presets for plot sizes** are available (e.g. Revtex, A0 poster, PowerPoint
   presentation, standard Latex document). The plot width is restricted
   to one (=normal size) or two (=wide size) text columns, because most 
-  journals are restrictive concerning plot widths. Also, it looks better
-  anyway if you don't have 50 different plot sizes in your thesis.
+  journals (Physical Review Letters, Physical Review B, Applied Physics Letters etc.)
+  **are restrictive concerning plot widths**. Also, it looks better
+  anyway if you don't have 50 different plot sizes in your thesis. We ensure
+  that the **plot size and font sizes are always consistent**.
 - It is very easy to **replot many plots in a different style, size or file format**,
   e.g. if you want to recreate diagrams for a different journal or a presentation.
 - You can supply **style/size/file format parameters in the plot script or as command line
