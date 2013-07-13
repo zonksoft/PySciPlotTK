@@ -1,36 +1,10 @@
-"""
-A scientific plotting convenience class called EasyPlotter.
-
-You can choose between the styles:
-- latex
-- matlab
-
-...as well as the formats:
-- revtex
-- a0poster
-
-This choice can be given to the EasyPlotter class through the command line
-arguments of your script (e.g. by using a Makefile) or "manually" by using
-the default constructor.
-
-The width of the plots is fixed and can be
-- normal_figure
-- wide_figure
-
-with a variable height (there is also a default value).
-
-When finished, there is a save function to save to plot to a file.
-
-The central class is EasyClass - please also see its documentation below!
-"""
-
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib import artist
-import matplotlib
 import sys
-import inspect
+from pysciplottk.formatting import get_formatting_class
+from pysciplottk.sizes import get_size_class
 
 # XXX: add additional formatting: 'latex,revtex', 'matplotlib,poster'...
 # Smells like Builder pattern (at least the 'extended' version)
@@ -40,137 +14,6 @@ import inspect
 # or recalculate it.
 
 # XXX: Make properties private.
-
-class SizesBase:
-    """
-    Base class for classes that contain the size and font specifications
-    for a certain publication format (e.g. Revtex, A0 poster...). The subclasses
-    only contain information about sizes and do not set a specific style (e.g.
-    font type, other specifics).
-    """
-    def intensive_properties(self, format_name):
-        """
-        Return font size, title size and line width
-        for a given format (e.g. 'matlab', 'latex')
-        """
-        return (self.fontsize[format_name],
-                self.titlesize[format_name],
-                self.linewidth[format_name])
-    
-class SizesRevtex(SizesBase):
-    """
-    Specify the plot format for Revtex plots.
-    """
-    size_name = 'revtex'
-    normal_figure_width = 243./72.
-    normal_figure_default_height = 2.
-    wide_figure_width = 482./72.
-    wide_figure_default_height = 4. 
-    fontsize = {'matlab': 7,
-                'latex': 8}
-    titlesize = {'matlab': 8,
-                 'latex': 9}
-    linewidth = {'matlab': 0.4,
-                 'latex': 0.4}      
-    
-class SizesA0poster(SizesBase):
-    """
-    Specify the plot format for A0 poster plots.
-    """
-    size_name = 'a0poster'
-    normal_figure_width = 700./72.
-    normal_figure_default_height = 500./72.
-    wide_figure_width = 1400./72.
-    wide_figure_default_height = 500./72.
-    fontsize = {'matlab': 14,
-                'latex': 16}
-    titlesize = {'matlab': 16,
-                 'latex': 18}
-    linewidth = {'matlab': 1,
-                 'latex': 1}
-                                     
-def get_size_class(size_name):
-    """
-    Get the size format class (subclass of SizesBase, e.g. SizesRevtex,
-    SizesA0poster) by its name ('revtex', 'a0poster', etc.).
-    It returns the class, if found.
-    """
-    for name, obj in inspect.getmembers(sys.modules[__name__]):
-        if (inspect.isclass(obj) and issubclass(obj, SizesBase) and
-            obj is not SizesBase):
-            if obj.size_name == size_name:
-                return obj
-    raise KeyError('size_name %s not found' % size_name)
-              
-                     
-class FormattingBase:
-    """
-    Base class for plot style parameter sets (e.g. Latex, Matlab,..)
-    """
-    pass
-   
-class FormattingLatex(FormattingBase):
-    """
-    Provides functions to set the Matplotlib global parameters to Latex
-    formatting.
-    """
-    format_name = 'latex'
-    def set_matplotlib_global_parameters(self, sizes):
-        """
-        Set default style parameters for matplotlib.
-        """
-        
-        fontsize, titlesize, linewidth = \
-            sizes.intensive_properties(self.format_name)
-                    
-        matplotlib.rcParams['lines.linewidth'] = linewidth
-        matplotlib.rcParams['patch.linewidth'] = linewidth
-        matplotlib.rcParams['axes.linewidth'] = linewidth
-        matplotlib.rcParams['axes.titlesize'] = titlesize
-        matplotlib.rcParams['grid.linewidth'] = linewidth
-        matplotlib.rcParams['font.size'] = fontsize
-        matplotlib.rcParams['font.family'] = 'serif'
-        matplotlib.rcParams['xtick.major.width'] = linewidth
-        matplotlib.rcParams['xtick.minor.width'] = linewidth
-        matplotlib.rcParams['text.usetex'] = True
-        matplotlib.rcParams['font.serif'] = ['Computer Modern Roman']
-        matplotlib.rcParams['font.monospace'] = ['Computer Modern Typewriter']
-        
-class FormattingMatlab(FormattingBase):
-    """
-    Provides functions to set the Matplotlib global parameters to Matlab
-    formatting.
-    """
-    format_name = 'matlab'
-    def set_matplotlib_global_parameters(self, sizes):
-        """
-        Set default style parameters for matplotlib.
-        """ 
-        
-        fontsize, titlesize, linewidth = \
-            sizes.intensive_properties(self.format_name)
-                        
-        matplotlib.rcParams['lines.linewidth'] = linewidth
-        matplotlib.rcParams['patch.linewidth'] = linewidth
-        matplotlib.rcParams['axes.linewidth'] = linewidth
-        matplotlib.rcParams['axes.titlesize'] = fontsize
-        matplotlib.rcParams['grid.linewidth'] = linewidth
-        matplotlib.rcParams['font.size'] = fontsize        
-        matplotlib.rcParams['axes.titlesize'] = titlesize    
-        
-def get_formatting_class(format_name):
-    """
-    Get the style format class (subclass of Formatting, e.g. FormattingMatlab,
-    FormattingLatex) by its name ('latex', 'matlab' etc.).
-    It returns the class, if found.
-    """
-    for name, obj in inspect.getmembers(sys.modules[__name__]):
-        if (inspect.isclass(obj) and issubclass(obj, FormattingBase) and
-            obj is not FormattingBase):
-            if obj.format_name == format_name:
-                return obj
-    raise KeyError('format_name %s not found' % format_name)  
-                    
     
 class EasyPlotter:
     """
