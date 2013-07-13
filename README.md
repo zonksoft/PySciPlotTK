@@ -35,12 +35,16 @@ The features are:
     cd PySciPlotTK
     sudo python setup.py install
     
+**Package download and installation in user directory:**
+
 If you don't have root rights, use:
 
     git clone https://github.com/zonksoft/PySciPlotTK
     cd PySciPlotTK
     python setup.py install --user
     
+**Package download and setting PYTHONPATH:**
+
 Use the package in-place by setting ``$PYTHONPATH`` (do it only if you know why you want this - e.g.
 if you plan to make your own changes and you don't want to run setup.py all the time):
 
