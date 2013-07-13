@@ -23,6 +23,30 @@ The features are:
 - It works well together with **Makefiles**, so you can integrate it into your preexisting
   Latex Makefile workflow.
 
+###  Installation
+
+**Requirements:** Matplotlib needs to be installed on your system, e.g. with
+
+    sudo apt-get install python-matplotlib
+
+**Package download and installation:**
+
+    git clone https://github.com/zonksoft/PySciPlotTK
+    cd PySciPlotTK
+    sudo python setup.py install
+    
+If you don't have root rights, use:
+
+    git clone https://github.com/zonksoft/PySciPlotTK
+    cd PySciPlotTK
+    python setup.py install --user
+    
+Use the package in-place by setting ``$PYTHONPATH`` (do it only if you know why you want this - e.g.
+if you plan to make your own changes and you don't want to run setup.py all the time):
+
+    git clone https://github.com/zonksoft/PySciPlotTK
+    cd PySciPlotTK
+    echo "export PYTHONPATH=$(pwd):\$PYTHONPATH" >> ~/.bashrc && . ~/.bashrc
 
 ### Available styles/sizes
 
