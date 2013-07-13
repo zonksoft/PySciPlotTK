@@ -67,23 +67,23 @@ the output filename and the style. The style has the syntax 'style,size', e.g.
 *Example 1*: Plot a one-column ('normal') figure as PDF for a revtex document in Matlab style.
 
 ```python
-    from pysciplottk.easyplotter import EasyPlotter
-    plotter = EasyPlotter('output.pdf','latex,revtex')
-    fig = plotter.normal_figure()
-    ax = fig.add_subplot(111)
-    ax.plot([1,2,3],[4,5,6])
-    plotter.save()
+from pysciplottk.easyplotter import EasyPlotter
+plotter = EasyPlotter('output.pdf','latex,revtex')
+fig = plotter.normal_figure()
+ax = fig.add_subplot(111)
+ax.plot([1,2,3],[4,5,6])
+plotter.save()
 ```
 
 *Example 2*: Plot a two-column ('wide') figure as PNG for a presentation in Latex style.
 
 ```python
-    from pysciplottk.easyplotter import EasyPlotter
-    plotter = EasyPlotter('output.png','matlab,presentation')
-    fig = plotter.wide_figure(height=3)
-    ax = fig.add_subplot(111)
-    ax.plot([1,2,3],[4,5,6])
-    plotter.save()
+from pysciplottk.easyplotter import EasyPlotter
+plotter = EasyPlotter('output.png','matlab,presentation')
+fig = plotter.wide_figure(height=3)
+ax = fig.add_subplot(111)
+ax.plot([1,2,3],[4,5,6])
+plotter.save()
 ```
 
 ### Use command line arguments
@@ -95,14 +95,14 @@ line arguments.
 Plot script *plot.py*:
 
 ```python
-    import sys
-    from pysciplottk.easyplotter import EasyPlotter
-    plotter = EasyPlotter.from_argv(sys.argv)
-    ax = plotter.normal_figure_single_ax()
-    ax.plot([1,2,3],[4,5,6])
-    if plotter.flag == 'plot_more':
-        ax.plot([4],[19])
-    plotter.save()
+import sys
+from pysciplottk.easyplotter import EasyPlotter
+plotter = EasyPlotter.from_argv(sys.argv)
+ax = plotter.normal_figure_single_ax()
+ax.plot([1,2,3],[4,5,6])
+if plotter.flag == 'plot_more':
+    ax.plot([4],[19])
+plotter.save()
 ```
 
 By invoking the script with various command line arguments, you can change
